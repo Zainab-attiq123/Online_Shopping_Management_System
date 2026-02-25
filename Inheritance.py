@@ -1,70 +1,30 @@
-class MaleClothing(Product):
+class Clothing(Product):
 
-    def __init__(self, product_id, name, price, stock, size, color, clothing_type):
-        super().__init__(product_id, name, price, stock, "Male", size, color)
-        self.__clothing_type = clothing_type  # Shirt, Trouser, Kurta, Jacket, etc.
-
-    def get_clothing_type(self):
-        return self.__clothing_type
-
-    def get_category(self):
-        return f"Male Clothing - {self.__clothing_type}"
+    def __init__(self, product_id, name, price, size):
+        super().__init__(product_id, name, price)
+        self.__size = size
 
     def get_details(self):
-        base = super().get_details()
-        return f"{base} | Type: {self.__clothing_type}"
-
-    def apply_discount(self, percentage):
-        new_price = super().apply_discount(percentage)
-        print(f"  Male clothing discount applied! New price: Rs.{new_price:.2f}")
-        return new_price
+        return f"{super().get_details()} | Size: {self.__size}"
 
 
-class FemaleClothing(Product):
+class User(AbstractUser):
 
-    def __init__(self, product_id, name, price, stock, size, color, clothing_type, style="Casual"):
-        super().__init__(product_id, name, price, stock, "Female", size, color)
-        self.__clothing_type = clothing_type  # Kurti, Dress, Lehenga, Shalwar, etc.
-        self.__style = style                  # Casual, Formal, Party, Traditional
+    def __init__(self, user_id, name):
+        self.__user_id = user_id
+        self.__name = name
 
-    def get_clothing_type(self):
-        return self.__clothing_type
-
-    def get_style(self):
-        return self.__style
-
-    def get_category(self):
-        return f"Female Clothing - {self.__clothing_type}"
-
-    def get_details(self):
-        base = super().get_details()
-        return f"{base} | Type: {self.__clothing_type} | Style: {self.__style}"
-
-    def apply_discount(self, percentage):
-        new_price = super().apply_discount(percentage)
-        print(f"  Female clothing discount applied! New price: Rs.{new_price:.2f}")
-        return new_price
+    def get_profile(self):
+        return f"User ID: {self.__user_id} | Name: {self.__name}"
 
 
-class UnisexClothing(Product):
-    
-    def __init__(self, product_id, name, price, stock, size, color, clothing_type):
-        super().__init__(product_id, name, price, stock, "Unisex", size, color)
-        self.__clothing_type = clothing_type
+class Customer(User):
 
-    def get_clothing_type(self):
-        return self.__clothing_type
-
-    def get_category(self):
-        return f"Unisex Clothing - {self.__clothing_type}"
-
-    def get_details(self):
-        base = super().get_details()
-        return f"{base} | Type: {self.__clothing_type}"
-
-    def apply_discount(self, percentage):
-        new_price = super().apply_discount(percentage)
-        print(f"  Unisex clothing discount applied! New price: Rs.{new_price:.2f}")
-        return new_price
+    def get_profile(self):
+        return super().get_profile() + " | Role: Customer"
 
 
+class Admin(User):
+
+    def get_profile(self):
+        return super().get_profile() + " | Role: Admin"
